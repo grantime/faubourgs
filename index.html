@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Carte des faubourgs</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="node_modules/leaflet-routing-machine/leaflet-routing-machine.css" />
     <style>
         .map {
             position: absolute;
@@ -17,7 +17,23 @@
 <body>
     <div id="map" class="map"></div>
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-    <script src="leaflet-routing-machine.js"></script>
+    <script src="node_modules/leaflet-routing-machine/leaflet-routing-machine.js"></script>
+
+    <script>
+        var map = L.map('map');
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.Routing.control({
+            waypoints: [
+                L.latLng(57.74, 11.94),
+                L.latLng(57.6792, 11.949)
+            ],
+            routeWhileDragging: true
+        }).addTo(map);
+    </script>
 
 </body>
 </html>
