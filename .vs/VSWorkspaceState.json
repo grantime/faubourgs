@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\.git",
+    "\\node_modules",
+    "\\Paramètres locaux (.vs)",
+    "\\Paramètres locaux (.vs)\\dev_faubourgs"
   ],
-  "SelectedNode": "\\leaflet-routing-machine.js",
+  "SelectedNode": "\\.git",
   "PreviewInSolutionExplorer": false
 }

@@ -20,11 +20,11 @@
 <body>
     <div id="map" class="map"></div>
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-    <script src="/blob/main/node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
 
     <script type="text/javascript">
-        var map = L.map('map').setView([57.74, 11.94], 3);
+        var map = L.map('map').setView([43.936394130192156, 4.809748328708949], 3);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors',
@@ -35,8 +35,8 @@
 
         L.Routing.control({
             waypoints: [
-                L.latLng(57.74, 11.94),
-                L.latLng(57.6792, 11.949)
+                L.latLng(43.936394130192156, 4.809748328708949),
+                L.latLng(43.94442360164942, 4.795687948690686)
             ],
             routeWhileDragging: true
         }).addTo(map);
