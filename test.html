@@ -12,23 +12,14 @@
 
 
     <script type="text/javascript">
+
         var map = L.map('map', {
-            maxBounds: [[43.92025666736127, 4.77420524672164], [43.95301591724069, 4.823641875455148]],
-        }).setView([43.936394130192156, 4.809748328708949], 3);
+            center: [-17, -67],
+            zoom: 3
+        });
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
-            maxZoom: 16,
-
-
-        }).addTo(map);
-
-        L.Routing.control({
-            waypoints: [
-                L.latLng(43.936394130192156, 4.809748328708949),
-                L.latLng(43.94442360164942, 4.795687948690686)
-            ],
-            routeWhileDragging: true
+        var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+            layers: 'TOPO-OSM-WMS'
         }).addTo(map);
 
     </script>
