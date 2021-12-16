@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <title>Carte des faubourgs</title>
     <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" crossorigin=""/>
-    <link rel="stylesheet" src="node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
     
     <style>
         body {
@@ -27,30 +29,71 @@
     <script src="node_modules/leaflet/dist/leaflet.js" crossorigin=""></script>
     <script src="node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
     <script src="node_modules/leaflet-routing-machine/src/localization.js"></script>
+    <script src="node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script type="text/javascript" src="node_modules/leaflet.icon.glyph/Leaflet.Icon.Glyph.js"></script>
 
 
 
     <script type="text/javascript">
         var map = L.map('map', {
-            maxBounds: [[43.92025666736127, 4.77420524672164], [43.95301591724069, 4.823641875455148]],
-        }).setView([43.936394130192156, 4.809748328708949], 3);
+            maxBounds: [[43.895404, 4.692806], [44.066870, 5.050437]],
+        },
+        waypoints = [
+                L.latLng(43.933657, 4.832623),
+                L.latLng(43.94442360164942, 4.795687948690686)
+            ],).setView([43.935758, 4.809668], 4);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
-            maxZoom: 16,
+        var baselayers = {
+            OSM: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           attribution: '© OpenStreetMap contributors',
+           maxZoom: 18,
+        }),
+            OrthoAvignon: L.tileLayer.wms('https://cartes.mairie-avignon.com/cartes/index.php/lizmap/service/?repository=rep0020&project=avignon_wms&', {
+                layers: 'raster_ortho_2018', 
+                format: 'image/png', 
+                transparent: true,
+                })
+    };baselayers.OrthoAvignon.addTo(map);
+
+        
+
+        L.control.scale({'position':'bottomleft','metric':true,'imperial':false}).addTo(map);
+        
+        var layerControl = L.control.layers(baselayers, null, {position:'bottomleft'}).addTo(map);
+        
 
 
-        }).addTo(map);
 
         L.Routing.control({
-            waypoints: [
-                L.latLng(43.936394130192156, 4.809748328708949),
-                L.latLng(43.94442360164942, 4.795687948690686)
-            ],
-            routeWhileDragging: true,
+            //waypoints: [
+                //L.latLng(43.936394130192156, 4.809748328708949),
+                //L.latLng(43.94442360164942, 4.795687948690686)
+            //],
+            plan: L.Routing.plan(waypoints, {
+                createMarker: function(i, wp) 
+                    {return L.marker(
+                        wp.latLng, {
+					        draggable: true,
+					        icon: L.icon.glyph({ glyph: String.fromCharCode(65 + i) }),
+				        });
+			        },
+                    geocoder: L.Control.Geocoder.nominatim(),
+                    routeWhileDragging: false,
+            }),
+            //routeWhileDragging: false,
+            //geocoder: L.Control.Geocoder.nominatim(),
             collapsible: true,
             language : 'fr',
+            showAlternatives: false,
         }).addTo(map);
+
+
+        L.Routing.itinerary({
+            collapsible : 'true',
+            showAlternatives: false,
+    });
+
+        
 
     </script>
     
